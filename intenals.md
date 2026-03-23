@@ -14,7 +14,7 @@ All code lives under `LLMDebates/`:
 ## How to run (local)
 
 ```powershell
-cd "c:\Users\azizs\OneDrive\Documents\cursor\LLMDebates"
+cd LLMDebates
 npm install
 npm run dev
 ```

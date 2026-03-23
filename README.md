@@ -17,7 +17,7 @@ At the end, the app also generates a **PDF report** showing the transcript of th
 1. Open a terminal and go to this folder:
 
    ```powershell
-   cd "c:\Users\azizs\OneDrive\Documents\cursor\LLMDebates"
+   cd LLMDebates
    ```
 
 2. Install dependencies:
