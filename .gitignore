@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Compiled output
+dist/
+
+# Environment variables — CRITICAL
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
