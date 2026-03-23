@@ -68,7 +68,11 @@ function parseChoiceFromText(
   rawText: string,
   numOptions: number,
 ): { choiceIndex: number; reasoning: string } {
-  const trimmed = rawText.trim();
+  // const trimmed = rawText.trim();
+  const trimmed = rawText
+      .replace(/```json/g, '')
+      .replace(/```/g, '')
+      .trim();
 
   // Try strict JSON parse first.
   try {

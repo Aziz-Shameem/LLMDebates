@@ -315,7 +315,8 @@ async function callGemini(
   }
 
   const temperature = options.temperature ?? 0.3;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+  // const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
 
   const res = await fetch(url, {
     method: 'POST',
@@ -343,9 +344,18 @@ async function callGemini(
   const data: any = await res.json();
   const candidates = data.candidates || [];
   const first = candidates[0];
+  // const text =
+  //   first?.content?.parts?.map((p: any) => p.text).join(' ') ??
+  //   JSON.stringify(data);
+
   const text =
-    first?.content?.parts?.map((p: any) => p.text).join(' ') ??
-    JSON.stringify(data);
+    first?.content?.parts
+      ?.map((p: any) => p?.text)
+      ?.filter((t: any) => typeof t === 'string')
+      ?.join(' ')
+      ?.trim();
+  
+  const finalText = text && text.length > 0 ? text : JSON.stringify(data);
 
   const usage = data.usageMetadata || {};
   const approxTokens = (s: string) => Math.max(1, Math.ceil((s ?? '').length / 4));
@@ -362,7 +372,7 @@ async function callGemini(
     usage.candidatesTokenCount;
 
   return {
-    text,
+    text: finalText,
     // Gemini sometimes returns different/partial usage fields; fall back to a
     // cheap heuristic so cost reporting doesn't show `n/a`.
     inputTokens:
